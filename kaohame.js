@@ -22,24 +22,28 @@ var canvas = document.getElementById("canvas");
 video.addEventListener("loadedmetadata",function(e) {
 
   var ctx = canvas.getContext("2d");
-  canvas.height = video.videoHeight;
-  canvas.width = video.videoWidth;
+  canvas.height = Math.floor(window.parent.screen.height*0.5);
+  var new_image_height = canvas.height;
+  var new_image_width = Math.floor(canvas.height*image.width/image.height);
   ctx.beginPath();
-  ctx.rect((canvas.width-image.width)/2,(canvas.height-image.height)/2,image.width,image.height);
+  ctx.rect(Math.floor((canvas.width-new_image_width)/2),0,new_image_width,new_image_height);
   ctx.clip();
-  canvas.height = image.height;
-  canvas.width = image.width;
+  canvas.height = new_image_height;
+  canvas.width = new_image_width;
+  ctx.translate(canvas.width,0);
+  ctx.scale(-1,1);
 
   setInterval(function(e) {
     ctx.drawImage(video,0,0,canvas.width,canvas.height);
-    ctx.drawImage(image,(canvas.width-image.width)/2,(canvas.height-image.height)/2);
+    ctx.drawImage(image,Math.floor((canvas.width-new_image_width)/2),0,
+      new_image_width,new_image_height);
   },33);
 });
 
 function chromaKey(){
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
-  var imageData = ctx.getImageData(0, 0, 1, 1);
+  var imageData = ctx.getImageData(0,0,1,1);
   data = imageData.data;
   var ch_red = data[0];
   var ch_green = data[1];
@@ -66,7 +70,7 @@ function chromaKey(){
 function saveCanvas(saveType){
     chromaKey();
     var imageType = "image/png";
-    var fileName = "sample.png";
+    var fileName = "helo.png";
     var canvas = document.getElementById('canvas');
     var base64 = canvas.toDataURL(imageType);
     var blob = Base64toBlob(base64);
