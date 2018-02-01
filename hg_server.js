@@ -10,8 +10,6 @@ var mime = {
   ".ico" : "image/x-icon"
 };
 
-const hostname = '127.0.0.1';
-const port = 8080;
 
 var server = http.createServer();
 server.on('request',doRequest);
@@ -36,6 +34,6 @@ function doRequest(req, res){
   }
 }
 
-server.listen(port, hostname, ()=>{
+server.listen(process.env.PORT || 8080, ()=>{
   console.log(`Server running at http://${hostname}:${port}/`);
 });
