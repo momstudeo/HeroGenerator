@@ -7,6 +7,7 @@ var mime = {
   ".css" : "text/css",
   ".js" : "text/javascript",
   ".png" : "image/png",
+  ".gif" : "image/gif",
   ".ico" : "image/x-icon"
 };
 
@@ -23,8 +24,6 @@ function doRequest(req, res){
   }
 
   var fullPath = __dirname + filePath;
-  console.log(`path=${filePath}`);
-  console.log(`mime-type = ${mime[path.extname(fullPath)]}`);
   res.writeHead(200,{'Content-Type': mime[path.extname(fullPath)] || "text/plain"});
   fs.readFile(fullPath, readText);
 

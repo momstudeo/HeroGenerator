@@ -15,28 +15,27 @@ else {
 }
 var image = new Image();
 image.crossOrigin = "Anonymous";
-image.src = "img/jitensya_kuma.png";
+image.src = "img/run2.png";
 
 var canvas = document.getElementById("canvas");
 
 video.addEventListener("loadedmetadata",function(e) {
 
   var ctx = canvas.getContext("2d");
-  canvas.height = Math.floor(window.parent.screen.height*0.5);
+  canvas.height = Math.floor(window.parent.screen.height*0.45);
   var new_image_height = canvas.height;
   var new_image_width = Math.floor(canvas.height*image.width/image.height);
   ctx.beginPath();
   ctx.rect(Math.floor((canvas.width-new_image_width)/2),0,new_image_width,new_image_height);
   ctx.clip();
-  canvas.height = new_image_height;
-  canvas.width = new_image_width;
+  // canvas.height = new_image_height;
+  // canvas.width = new_image_width;
   ctx.translate(canvas.width,0);
   ctx.scale(-1,1);
 
   setInterval(function(e) {
-    ctx.drawImage(video,0,0,canvas.width,canvas.height);
-    ctx.drawImage(image,Math.floor((canvas.width-new_image_width)/2),0,
-      new_image_width,new_image_height);
+    ctx.drawImage(video,0,0,video.videoWidth,video.videoHeight);
+    ctx.drawImage(image,Math.floor((canvas.width-new_image_width)/2),0,new_image_width,new_image_height);
   },33);
 });
 
@@ -70,7 +69,7 @@ function chromaKey(){
 function saveCanvas(saveType){
     chromaKey();
     var imageType = "image/png";
-    var fileName = "helo.png";
+    var fileName = "hero.png";
     var canvas = document.getElementById('canvas');
     var base64 = canvas.toDataURL(imageType);
     var blob = Base64toBlob(base64);
