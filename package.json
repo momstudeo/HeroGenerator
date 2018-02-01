@@ -1,0 +1,22 @@
+{
+  "name": "HeroGenerator",
+  "version": "0.0.1",
+  "description": "Hero Generator for Scratch Game",
+  "engines": {
+    "node": "9.5.0"
+  },
+  "main": "hg_server.js",
+  "scripts": {
+    "start": "node hg_server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/momstudeo/HeroGenerator"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "scratch"
+  ],
+  "license": "MIT"
+}
