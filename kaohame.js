@@ -17,6 +17,8 @@ var image = new Image();
 image.crossOrigin = "Anonymous";
 image.src = "img/run2.png";
 
+var saveFileName = "sample";
+
 var canvas = document.getElementById("canvas");
 
 video.addEventListener("loadedmetadata",function(e) {
@@ -64,16 +66,35 @@ function chromaKey(){
   ctx.putImageData(output,0,0);
 }
 
+// ファイルのサイズを変更する
+function changeImageSize(){
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext("2d");
+  var imagedata = ctx.getImageData(0,0,canvas.width,canvas.height);
+
+  var canvas4save = document.getElementById("canvas_forsaving");
+  var ctx4save = canvas4save.getContext("2d");
+
+  var dstWidth = 100;
+  var dstHeight = 200;
+
+  // canvas4save.width = dstWidth;
+  // canvas4save.height = dstHeight;
+  //
+  // ctx4save.putImageData(imagedata,dstWidth,dstHeight);
+  ctx4save.putImageData(imagedata,0,0);
+}
+
 
 // canvas上のイメージを保存
 function saveCanvas(saveType){
     chromaKey();
+    changeImageSize();
     var imageType = "image/png";
-    var fileName = "hero.png";
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('canvas_forsaving');
     var base64 = canvas.toDataURL(imageType);
     var blob = Base64toBlob(base64);
-    saveBlob(blob, fileName);
+    saveBlob(blob);
 }
 
 // Base64データをBlobデータに変換
@@ -92,7 +113,7 @@ function Base64toBlob(base64)
 }
 
 // 画像のダウンロード
-function saveBlob(blob, fileName)
+function saveBlob(blob)
 {
     var url = (window.URL || window.webkitURL);
     var dataUrl = url.createObjectURL(blob);
@@ -101,6 +122,11 @@ function saveBlob(blob, fileName)
     // a要素を作成
     var a = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
     a.href = dataUrl;
-    a.download = fileName;
+    a.download = saveFileName;
     a.dispatchEvent(event);
+}
+
+function imgClick(fileName) {
+  image.src = "img/"+fileName+".png";
+  saveFileName = fileName+".png";
 }
